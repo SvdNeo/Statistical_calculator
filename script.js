@@ -27,3 +27,41 @@ const getMode = (array) => {
   const getRange = (array) => {
     return Math.max(...array) - Math.min(...array);
   }
+  const getMode = (array) => {
+    const counts = {};
+    array.forEach((el) => {
+      counts[el] = (counts[el] || 0) + 1;
+    })
+    if (new Set(Object.values(counts)).size === 1) {
+      return null;
+    }
+    const highest = Object.keys(counts).sort(
+      (a, b) => counts[b] - counts[a]
+    )[0];
+    const mode = Object.keys(counts).filter(
+      (el) => counts[el] === counts[highest]
+    );
+    return mode.join(", ");
+  }
+  
+  const getRange = (array) => {
+    return Math.max(...array) - Math.min(...array);
+  }
+  
+  const getVariance = (array) => {
+    const mean = getMean(array);
+    const variance = array.reduce((acc, el) => {
+      const difference = el - mean;
+      const squared = difference ** 2;
+      return acc + squared;
+    }, 0) / array.length;
+    return variance;
+  }
+  
+  const getStandardDeviation = (array) => {
+    const variance = getVariance(array);
+    const standardDeviation = Math.sqrt(variance);
+    return standardDeviation;
+  }
+  
+  
